@@ -1,4 +1,5 @@
 import styles from './Profile.module.css';
+import MyPosts from './MyPosts/MyPosts'
 
 const Profile = () => (
     <main className={styles.main}>
@@ -15,15 +16,7 @@ const Profile = () => (
                     Web Site: <a rel="noreferrer" href="https://github.com/Parbiska" className={styles.profile__link} target="_blank">https://github.com/Parbiska</a>
                 </div>
             </div>
-            <div className={styles.profile__posts}>
-                <h2>My posts</h2>
-                <form id={styles.new__post}>
-                    <textarea form={styles.new__post} placeholder="your news..." className={styles.profile__area}></textarea>
-                    <button className={styles.profile__button} form={styles.new__post}>Send</button>
-                </form>
-                <div className={styles.profile__post}>Hey, why nobody love me?</div>
-                <div className={styles.profile__post}>It's our new program! Hey!</div>
-            </div>
+            <MyPosts></MyPosts>
         </div>
     </main>
 );

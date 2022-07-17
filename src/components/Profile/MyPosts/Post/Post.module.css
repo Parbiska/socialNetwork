@@ -1,0 +1,15 @@
+.post {
+    margin: 20px 0 20px 0;
+    font-size: 22px;
+}
+
+.post:before {
+    margin-right: 10px;
+    content: "";
+    display: inline-block;
+    background: url(https://store.playstation.com/store/api/chihiro/00_09_000/container/RU/ru/99/EP2402-CUSA05624_00-AV00000000000193/0/image?_version=00_09_000&platform=chihiro&bg_color=000000&opacity=100&w=720&h=720) no-repeat 50%/cover;
+    vertical-align: middle;
+    border-radius: 100%;
+    height: 35px;
+    width: 35px;
+}

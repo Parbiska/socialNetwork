@@ -1,0 +1,42 @@
+.posts {
+    padding: 8px;
+}
+
+.posts__new {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: end;
+    width: 100%;
+}
+
+.posts__area {
+    resize: none;
+    padding: 10px 16px;
+    width: calc(100% - 32px);
+    height: 40px;
+    border: none;
+    background-color: lightgrey;
+    border-radius: 3px;
+}
+
+.posts__area:focus {
+    outline: none;
+}
+
+.posts__button {
+    border-radius: 3px;
+    font-size: 18px;
+    color: white;
+    margin-top: 10px;
+    background-color: #16A347;
+    border: none;
+}
+
+.posts__button:hover {
+    cursor: pointer;
+}
+
+.posts__button_reset {
+    background-color: red;
+    margin-right: 10px;
+}
