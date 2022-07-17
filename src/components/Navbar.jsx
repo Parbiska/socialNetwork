@@ -1,20 +1,22 @@
+import styles from './Navbar.module.css';
+
 const Navbar = () => (
-    <nav className="nav">
-        <ul className="nav__list">
-          <li className="nav__item">
+    <nav className={styles.nav}>
+        <ul className={styles.nav__list}>
+          <li className={styles.nav__item}>
             <a href="#">Profile</a>
             </li>
-          <li className="nav__item">
+          <li className={styles.nav__item}>
             <a href="#">Messages</a>
             </li>
-          <li className="nav__item">
+          <li className={styles.nav__item}>
             <a href="#">News</a>
           </li>
-          <li className="nav__item">
+          <li className={styles.nav__item}>
             <a href="#">Music</a>
           </li>
-          <li className="nav__item">
-            <a href="#" id="settings">Settings</a>
+          <li className={styles.nav__item}>
+            <a href="#" id={styles.settings}>Settings</a>
           </li>
         </ul>
     </nav>
