@@ -1,4 +1,4 @@
-.wrapper {
+.app {
     display: grid;
     grid-template-rows: 60px 22vh auto;
     grid-template-columns: 1fr 5fr;
@@ -12,4 +12,6 @@
     gap: 12px;
 }
 
-
+.app__main {
+    grid-area: m;
+}

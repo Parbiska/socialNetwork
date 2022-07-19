@@ -1,0 +1,15 @@
+.user {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.user__link {
+    color: black;
+    text-decoration: none;
+}
+
+.user__link:hover {
+    text-decoration: underline;
+}
+
+

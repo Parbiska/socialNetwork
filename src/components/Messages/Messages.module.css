@@ -1,0 +1,24 @@
+.messages__wrapper {
+    display: flex;
+    height: auto;
+    gap: 40px;
+}
+
+.messages__title {
+    font-size: 22px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.messages__divider {
+    width: 2px;
+    background-color: rgb(117, 100, 145);
+}
+
+.messages__dialogs {
+
+}
+
+.messages__dialog {
+
+}

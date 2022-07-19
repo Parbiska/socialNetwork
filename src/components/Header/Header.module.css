@@ -3,8 +3,24 @@
     grid-area: h;
     background-color: #16A347;
     border-radius: 3px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.header__img {
-    height: 100%;
+.header__network {
+    color: white;
+    display: flex;
+    align-items: center;
+    font-size: 26px;
+}
+
+.header__logo {
+    height: 60px;
+    margin-right: 10px;
+}
+
+.header__user {
+    height: 90%;
+    border-radius: 50%;
 }

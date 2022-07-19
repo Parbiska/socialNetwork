@@ -11,13 +11,18 @@
     margin: 0;
 }
 
-.nav__list li  a{
+.nav__link{
     font-size: 25px;
     color: white;
     text-decoration: none;
 }
 
-.nav__list li a:hover{
+.nav__link_active {
+    color: rgb(235, 235, 235);
+    text-decoration: underline;
+}
+
+.nav__link:hover{
     color: aliceblue;
     text-decoration: underline;
 }
