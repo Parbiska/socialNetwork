@@ -1,18 +1,25 @@
 .message {
     display: flex;
+    margin-top: 20px;
 }
 
-.message__user {
-    width: 70px;
-    text-align: center;
-    font-size: 15px;
+.message:last-child {
+    margin-bottom: 20px;
 }
 
 .message__img {
     display: block;
-    margin: 0 auto;
-    width: 100%;
-    height: 70px;
+    margin-right: 10px;
+    width: 50px;
+    height: 50px;
     object-fit: cover;
     border-radius: 50%;
+}
+
+.message__text {
+    font-size: 20px;
+}
+.message__name {
+    font-size: 24px;
+    line-height: 1;
 }

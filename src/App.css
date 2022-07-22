@@ -1,17 +1,16 @@
 .app {
+    height: 100vh;
     display: grid;
-    grid-template-rows: 60px 22vh auto;
+    grid-template-rows: 60px auto;
     grid-template-columns: 1fr 5fr;
     grid-template-areas: 
     "h h"
-    "n m"
-    "z m";
+    "n m";
     width: 1140px;
     margin: 0 auto;
-    padding-top: 10px;
     gap: 12px;
 }
 
 .app__main {
-    grid-area: m;
+    height: 100%;
 }

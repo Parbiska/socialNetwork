@@ -1,36 +1,36 @@
-.img {
+.info__wallpaper {
     width: 100%;
     height: 160px;
     object-fit: cover;
     margin-bottom: 8px;
 }
 
-.wrapper {
+.info__wrapper {
     display: flex;
 }
 
-.avatar {
+.info__avatar {
     width: 120px;
     height: 120px;
     margin-right: 40px;
 }
 
-.info {
+.info__descr {
     font-size: 20px;
 }
 
-.name {
+.info__name {
     line-height: 0.9;
     font-weight: 400;
     font-size: 30px;
     margin-bottom: 23px;
 }
 
-.link {
+.info__link {
     text-decoration: none;
     color: grey;
 }
 
-.link:hover {
+.info__link:hover {
     text-decoration: underline;
 }

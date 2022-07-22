@@ -1,5 +1,6 @@
 .posts {
     padding: 8px;
+    overflow: auto;
 }
 
 .posts__new {

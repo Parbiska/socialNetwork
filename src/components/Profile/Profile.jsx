@@ -6,9 +6,9 @@ const Profile = (props) => {
     return (
     <div className={styles.profile}>
         <ProfileInfo></ProfileInfo>
-        <MyPosts posts={props.data.posts}></MyPosts>
+        <MyPosts dispatch={props.dispatch} state={props.state}></MyPosts>
     </div>
-)
+);
 };
 
 export default Profile;
