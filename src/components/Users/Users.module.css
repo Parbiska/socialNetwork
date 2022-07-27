@@ -6,3 +6,20 @@
 .users {
     margin-bottom: 20px;
 }
+
+.pages {
+    font-size: 18px;
+}
+
+.page {
+
+}
+
+.page:hover {
+    cursor: pointer;
+}
+
+.page_active {
+    font-size: 20px;
+    font-weight: 500;
+}
