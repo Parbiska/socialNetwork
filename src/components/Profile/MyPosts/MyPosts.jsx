@@ -1,7 +1,6 @@
 import styles from './MyPosts.module.css';
 import Post from './Post/Post';
 import React from 'react';
-import { addPostActionCreator, updateNewPostTextActionCreator} from '../../../redux/profileReducer';
 
 const MyPosts = (props) => {
 
@@ -9,15 +8,15 @@ const MyPosts = (props) => {
 
     const changeTextarea = (e) => {
         const text = e.target.value;
-        props.dispatch(updateNewPostTextActionCreator(text));
+        props.updateNewPostText(text);
     };
 
     const resetTextarea = () => {
-        props.dispatch(updateNewPostTextActionCreator(''));
+        props.updateNewPostText('');
     }
 
     const addNewPost = () => {
-        props.dispatch(addPostActionCreator());
+        props.addPost();
     };
 
     return (

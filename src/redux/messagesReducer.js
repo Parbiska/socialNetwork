@@ -23,30 +23,38 @@ const initianalState = {
 
 };
 
-export const messagesReducer = (state = initianalState, action) => {
+const messagesReducer = (state = initianalState, action) => {
     switch (action.type) {
-        case ADD_MESSAGE:
-            const newMessage = {
-                id: state.messages.length + 1,
-                message: state.newMessageText,
-                img: 'https://store.playstation.com/store/api/chihiro/00_09_000/container/RU/ru/99/EP2402-CUSA05624_00-AV00000000000193/0/image?_version=00_09_000&platform=chihiro&bg_color=000000&opacity=100&w=720&h=720',
-                name: 'Me',
+        case ADD_MESSAGE: 
+            if (!!state.newMessageText) {
+                return {
+                    ...state,
+                    newMessageText: '',
+                    messages: [...state.messages, {
+                        id: state.messages.length + 1, 
+                        message: state.newMessageText,
+                        img: avaImg,
+                        name: 'Me',
+                    }],
+                };
+            };
+            return {
+                ...state
             };
 
-            if (!!newMessage.message) {
-                state.messages.push(newMessage);
-                state.newMessageText = '';
+        case UPDATE_NEW_MESSAGE_TEXT: 
+            return {
+                ...state,
+                newMessageText: action.newText,
             };
-            return state;
-        case UPDATE_NEW_MESSAGE_TEXT:
-            state.newMessageText = action.newText;
+
+        default:
             return state;
     }
-    return state;
 };
 
-export const addMessageActionCreator = () => ({ type: ADD_MESSAGE, });
-export const updateNewMessageTextActionCreator = (newText) => ({
+export const addMessageAC= () => ({ type: ADD_MESSAGE, });
+export const updateNewMessageTextAC = (newText) => ({
     type: UPDATE_NEW_MESSAGE_TEXT,
     newText: newText,
 });

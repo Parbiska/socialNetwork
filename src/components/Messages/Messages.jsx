@@ -2,7 +2,6 @@ import styles from './Messages.module.css';
 import Message from './Message/Message';
 import DialogItem from './DialogItem/DialogItem';
 import React from 'react';
-import { addMessageActionCreator, updateNewMessageTextActionCreator } from './../../redux/messagesReducer';
 
 const Messages = (props) => {
 
@@ -12,11 +11,11 @@ const Messages = (props) => {
 
     const changeTextarea = (e) => {
         const text = e.target.value;
-        props.dispatch(updateNewMessageTextActionCreator(text));
+        props.updateNewMessage(text);
     };
 
-    const sendMessage = () => {
-        props.dispatch(addMessageActionCreator());
+    const onSendMessage = () => {
+        props.sendMessage();
     };
 
 return (
@@ -32,7 +31,7 @@ return (
                 </div>
                 <form className={styles.messages__add}>
                     <textarea onChange={changeTextarea} className={styles.messages__area} placeholder="your message..." value={props.state.newMessageText}></textarea>
-                    <button type='button' onClick={sendMessage} className={styles.messages__button}>Send</button>
+                    <button type='button' onClick={onSendMessage} className={styles.messages__button}>Send</button>
                 </form>
             </div>
         </div>
