@@ -5,14 +5,26 @@
 
 .users {
     margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 .pages {
-    font-size: 18px;
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    margin: 0 auto;
+
+}
+
+.preloader {
+    max-width: 70px;
+    max-height: 70px;
+    margin: 25% auto 0 auto;
 }
 
 .page {
-
+    margin: 0 3px 0 3px;
 }
 
 .page:hover {
@@ -20,6 +32,6 @@
 }
 
 .page_active {
-    font-size: 20px;
+    font-size: 24px;
     font-weight: 500;
 }

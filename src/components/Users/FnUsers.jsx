@@ -23,5 +23,3 @@ const Users = props => {
         </div>
     );
 };
-
-export default Users;
