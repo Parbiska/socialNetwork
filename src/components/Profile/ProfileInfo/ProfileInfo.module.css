@@ -10,9 +10,10 @@
 }
 
 .info__avatar {
+    object-fit: cover;
     width: 120px;
     height: 120px;
-    margin-right: 40px;
+    margin-right: 10px;
 }
 
 .info__descr {
@@ -20,10 +21,9 @@
 }
 
 .info__name {
-    line-height: 0.9;
+    line-height: 1;
     font-weight: 500;
     font-size: 30px;
-    margin-bottom: 23px;
 }
 
 .info__link {
@@ -33,4 +33,20 @@
 
 .info__link:hover {
     text-decoration: underline;
+}
+
+.preloader {
+    width: 70px;
+    height: 70px;
+    margin: 10% auto 0 auto;
+}
+
+.contacts {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.contacts__Item {
+    color: black;
 }

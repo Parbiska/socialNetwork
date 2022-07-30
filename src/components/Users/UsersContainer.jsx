@@ -1,70 +1,94 @@
 import { connect } from 'react-redux';
-import { followAC, unfollowAC, setUsersAC, setCurrentPageAC, setTotalUsersCountAC, toggleIsFetchingAC } from './../../redux/usersReducer';
-import * as axios from 'axios';
+import {
+    follow,
+    unfollow,
+    setUsers,
+    setCurrentPage,
+    setTotalUsersCount,
+    toggleFetching,
+    toggleFollowingProgress
+} from './../../redux/usersReducer';
 import React from 'react';
 import Users from './Users';
+import { getUsers } from './../../api/api';
+import { unfollowAPI, followAPI } from '../../api/api';
 
 class UsersContainer extends React.Component {
 
-    componentDidMount() {
-        this.props.toggleIsFetching(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
-            .then(response => {
-                this.props.toggleIsFetching(false);
-                this.props.setUsers(response.data.items);
-                this.props.setTotalUsersCount(response.data.totalCount)
-            });
+    componentDidMount = async () => {
+        this.props.toggleFetching(true);
+        try {
+            const data = await getUsers(this.props.currentPage, this.props.pageSize);
+            this.props.toggleFetching(false);
+            this.props.setUsers(data.items);
+            this.props.setTotalUsersCount(data.totalCount)
+        }
+        catch(e) {
+            console.error('Ошибка в получении пользователей', e.message)
+        }
     }
 
-    onPageChanged = pageNumber => {
-        this.props.toggleIsFetching(true);
+    onPageChanged = async pageNumber => {
+        this.props.toggleFetching(true);
         this.props.setCurrentPage(pageNumber);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
-            .then(response => {
-                this.props.toggleIsFetching(false);
-                this.props.setUsers(response.data.items)
-            });
+        try {
+            const data = await getUsers(pageNumber, this.props.pageSize);
+            this.props.toggleFetching(false);
+            this.props.setUsers(data.items);
+        }
+        catch(e) {
+            console.error('Ошибка в получении пользователей', e.message)
+        }
+    }
+
+    follow = async userId => {
+        this.props.toggleFollowingProgress(true, userId);
+        try {
+            const data = await followAPI(userId);
+            if (data.resultCode === 0) {
+                this.props.follow(userId);
+            }
+        }
+        catch(e) {
+            console.error('Ошибка подписки', e.message);
+        }
+        this.props.toggleFollowingProgress(false, userId);
+    }
+
+    unfollow = async userId => {
+        this.props.toggleFollowingProgress(true, userId);
+        try {
+            const data = await unfollowAPI(userId);
+            if (data.resultCode === 0) {
+                this.props.unfollow(userId);
+            }
+        }
+        catch(e) {
+            console.error('Ошибка подписки', e.message)
+        }
+        this.props.toggleFollowingProgress(false, userId);
     }
 
     render() {
         return <>
-            <Users totalUsersCount={this.props.totalUsersCount}
-                onPageChanged={this.onPageChanged}
-                currentPage={this.props.currentPage}
-                users={this.props.users}
-                follow={this.props.follow}
-                unfollow={this.props.unfollow}
-                pageSize={this.props.pageSize}
-                isFetching={this.props.isFetching}
-            ></Users>
+            <Users isButtonPress={this.props.isButtonPress} 
+            onPageChanged={this.onPageChanged} 
+            users={this.props.users} 
+            follow={this.follow} 
+            unfollow={this.unfollow}></Users>
         </>
     }
 };
 
-const mapStateToProps = state => {
-    return {
-        users: state.usersPage.users,
-        pageSize: state.usersPage.pageSize,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-    }
-};
+const mapStateToProps = state => ({
+    users: state.usersPage.users,
+    pageSize: state.usersPage.pageSize,
+    totalUsersCount: state.usersPage.totalUsersCount,
+    currentPage: state.usersPage.currentPage,
+    isFetching: state.usersPage.isFetching,
+    isButtonPress: state.usersPage.isFollowingInProgress
+}
+);
 
-const mapDispatchToProps = dispatch => {
-    return {
-        follow: userId => dispatch(followAC(userId)),
-
-        unfollow: userId => dispatch(unfollowAC(userId)),
-
-        setUsers: users => dispatch(setUsersAC(users)),
-
-        setCurrentPage: pageNumber => dispatch(setCurrentPageAC(pageNumber)),
-
-        setTotalUsersCount: usersCount => dispatch(setTotalUsersCountAC(usersCount)),
-
-        toggleIsFetching: isFetching => dispatch(toggleIsFetchingAC(isFetching)),
-    }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);
+export default connect(mapStateToProps,
+    { follow, unfollow, setUsers, setCurrentPage, setTotalUsersCount, toggleFetching, toggleFollowingProgress })(UsersContainer);

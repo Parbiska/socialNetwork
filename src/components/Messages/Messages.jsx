@@ -5,13 +5,13 @@ import React from 'react';
 
 const Messages = (props) => {
 
-    const dialogsElements = props.state.dialogs.map(d => <DialogItem img={d.img} name={d.name} id={d.id}></DialogItem>);
+    const dialogsElements = props.state.dialogs.map(d => <DialogItem key={d.id} img={d.img} name={d.name} id={d.id}></DialogItem>);
 
-    const messages = props.state.messages.map(m => <Message name={m.name} img={m.img} text={m.message}></Message>);
+    const messages = props.state.messages.map(m => <Message key={m.id} name={m.name} img={m.img} text={m.message}></Message>);
 
     const changeTextarea = (e) => {
         const text = e.target.value;
-        props.updateNewMessage(text);
+        props.updateNewMessageText(text);
     };
 
     const onSendMessage = () => {

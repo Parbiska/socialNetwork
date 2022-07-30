@@ -22,7 +22,39 @@
     margin-right: 10px;
 }
 
-.header__user {
+.header__img {
     height: 90%;
     border-radius: 50%;
+}
+
+.header__login__wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.header__login {
+    color: white;
+    padding: 5px 7px;
+    line-height: 1;
+    border-radius: 5px;
+    border: solid 2px lightcyan;
+    background-color: rgb(80, 177, 209);
+}
+
+.header__login__btn {
+    color: white;
+    text-decoration: none;
+}
+
+.header__login__btn:hover {
+    text-decoration: none;
+}
+
+.header__img {
+    color: white;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+    margin-left: 10px;
 }

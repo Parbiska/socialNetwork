@@ -4,7 +4,7 @@ import React from 'react';
 
 const MyPosts = (props) => {
 
-    const posts = props.state.posts.map(p => <Post message={p.message} likesCount={p.likesCount}></Post>).reverse();
+    const posts = props.state.posts.map(p => <Post key={p.id} message={p.message} likesCount={p.likesCount}></Post>).reverse();
 
     const changeTextarea = (e) => {
         const text = e.target.value;

@@ -1,9 +1,8 @@
-import styles from './Preloader.module.css'
+import styles from './Preloader.module.css';
+import preloader from '../../../assets/images/preloader.svg';
 
-const Preloader = props => (
-    <div className={styles.wrapper}>
-        <img className={styles.preloader} src={props.src} alt='Loading...'/>
-    </div>
+const Preloader = () => (
+        <img className={styles.preloader} src={preloader} alt='Loading...'/>
 );
 
 export default Preloader;

@@ -4,6 +4,7 @@ const SET_USERS = 'SET-USERS';
 const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE';
 const SET_TOTAL_USERS_COUNT = 'SET-TOTAL-USERS-COUNT';
 const TOGGLE_IS_FETCHING = 'TOGGLE-IS-FETCHING';
+const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE-IS-FOLLOWING-PROGRESS';
 
 const initialState = {
     users: [],
@@ -11,6 +12,7 @@ const initialState = {
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: true,
+    isFollowingInProgress: []
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -45,16 +47,24 @@ const usersReducer = (state = initialState, action) => {
                 ...state,
                 isFetching: action.isFetching
             }
+        case TOGGLE_IS_FOLLOWING_PROGRESS: 
+            return {
+                ...state,
+                isFollowingInProgress: action.isFetching 
+                ? [...state.isFollowingInProgress, action.userId] 
+                : [state.isFollowingInProgress.filter(id => id !== action.userId)]
+            }
         default:
             return state;
     }
 };
 
-export const setCurrentPageAC = pageNumber => ({type: SET_CURRENT_PAGE, pageNumber});
-export const followAC = userId => ({ type: FOLLOW, userId });
-export const unfollowAC = userId => ({ type: UNFOLLOW, userId });
-export const setUsersAC = users => ({ type: SET_USERS, users });
-export const setTotalUsersCountAC = count => ({ type: SET_TOTAL_USERS_COUNT, count });
-export const toggleIsFetchingAC = isFetching => ({ type: TOGGLE_IS_FETCHING, isFetching });
+export const setCurrentPage = pageNumber => ({type: SET_CURRENT_PAGE, pageNumber});
+export const follow = userId => ({ type: FOLLOW, userId });
+export const unfollow = userId => ({ type: UNFOLLOW, userId });
+export const setUsers = users => ({ type: SET_USERS, users });
+export const setTotalUsersCount = count => ({ type: SET_TOTAL_USERS_COUNT, count });
+export const toggleFetching = isFetching => ({ type: TOGGLE_IS_FETCHING, isFetching });
+export const toggleFollowingProgress = (isFetching, userId) => ({ type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userId });
 
 export default usersReducer;

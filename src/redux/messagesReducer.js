@@ -1,4 +1,4 @@
-const ADD_MESSAGE = 'ADD-MESSAGE';
+const SEND_MESSAGE = 'SEND-MESSAGE';
 const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT';
 const smileImg = 'https://www.directivegroup.com/wp-content/uploads/2017/03/smile-9047-9380-hd-wallpapers-1.jpg';
 const lorem = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto, tempore.';
@@ -25,7 +25,7 @@ const initianalState = {
 
 const messagesReducer = (state = initianalState, action) => {
     switch (action.type) {
-        case ADD_MESSAGE: 
+        case SEND_MESSAGE: 
             if (!!state.newMessageText) {
                 return {
                     ...state,
@@ -53,8 +53,8 @@ const messagesReducer = (state = initianalState, action) => {
     }
 };
 
-export const addMessageAC= () => ({ type: ADD_MESSAGE, });
-export const updateNewMessageTextAC = (newText) => ({
+export const sendMessage= () => ({ type: SEND_MESSAGE, });
+export const updateNewMessageText = (newText) => ({
     type: UPDATE_NEW_MESSAGE_TEXT,
     newText: newText,
 });
