@@ -8,17 +8,17 @@ const instance = axios.create({
     }
 });
 
-export const getUsers = async (currentPage, pageSize) => {
+export const getUsersAPI = async (currentPage, pageSize) => {
     const response = await instance.get(`users?page=${currentPage}&count=${pageSize}`);
     return response.data;
 };
 
-export const getProfile = async userId => {
+export const getProfileAPI = async userId => {
     const response = await instance.get(`profile/${userId}`);
     return response.data;
 };
 
-export const authMe = async () => {
+export const authMeAPI = async () => {
     const response = await instance.get('auth/me');
     return response.data;
 };

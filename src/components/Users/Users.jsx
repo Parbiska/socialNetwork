@@ -8,7 +8,7 @@ const Users = props => {
 
     const pages = [];
 
-    for(let i=1; i <= pagesCount && i <= 5; i++) {
+    for(let i = 1; i <= pagesCount && i <= 5; i++) {
         pages.push(<span key={i} onClick={() => { props.onPageChanged(i) }} className={`${styles.page} ${props.currentPage === i ? styles.page_active : ''}`}>{i}</span>)
     }
 
@@ -16,7 +16,7 @@ const Users = props => {
 
     return (
         <div className={styles.users}>
-            <div className={styles.title}>Users</div>
+            <h1>Users</h1>
             <div className={styles.pages}>
                 {pages}
             </div>

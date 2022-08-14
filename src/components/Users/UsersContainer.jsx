@@ -2,71 +2,29 @@ import { connect } from 'react-redux';
 import {
     follow,
     unfollow,
-    setUsers,
-    setCurrentPage,
-    setTotalUsersCount,
-    toggleFetching,
-    toggleFollowingProgress
-} from './../../redux/usersReducer';
+    getUsers,
+    setCurrentPage
+} from '../../redux/usersReducer';
 import React from 'react';
 import Users from './Users';
-import { getUsers } from './../../api/api';
-import { unfollowAPI, followAPI } from '../../api/api';
 
 class UsersContainer extends React.Component {
 
-    componentDidMount = async () => {
-        this.props.toggleFetching(true);
-        try {
-            const data = await getUsers(this.props.currentPage, this.props.pageSize);
-            this.props.toggleFetching(false);
-            this.props.setUsers(data.items);
-            this.props.setTotalUsersCount(data.totalCount)
-        }
-        catch(e) {
-            console.error('Ошибка в получении пользователей', e.message)
-        }
+    componentDidMount = () => {
+        this.props.getUsers(this.props.currentPage, this.props.pageSize);
     }
 
-    onPageChanged = async pageNumber => {
-        this.props.toggleFetching(true);
+    onPageChanged = pageNumber => {
         this.props.setCurrentPage(pageNumber);
-        try {
-            const data = await getUsers(pageNumber, this.props.pageSize);
-            this.props.toggleFetching(false);
-            this.props.setUsers(data.items);
-        }
-        catch(e) {
-            console.error('Ошибка в получении пользователей', e.message)
-        }
+        this.props.getUsers(pageNumber, this.props.pageSize);
     }
 
-    follow = async userId => {
-        this.props.toggleFollowingProgress(true, userId);
-        try {
-            const data = await followAPI(userId);
-            if (data.resultCode === 0) {
-                this.props.follow(userId);
-            }
-        }
-        catch(e) {
-            console.error('Ошибка подписки', e.message);
-        }
-        this.props.toggleFollowingProgress(false, userId);
+    follow = userId => {
+        this.props.follow(userId);
     }
 
     unfollow = async userId => {
-        this.props.toggleFollowingProgress(true, userId);
-        try {
-            const data = await unfollowAPI(userId);
-            if (data.resultCode === 0) {
-                this.props.unfollow(userId);
-            }
-        }
-        catch(e) {
-            console.error('Ошибка подписки', e.message)
-        }
-        this.props.toggleFollowingProgress(false, userId);
+        this.props.unfollow(userId);
     }
 
     render() {
@@ -75,7 +33,10 @@ class UsersContainer extends React.Component {
             onPageChanged={this.onPageChanged} 
             users={this.props.users} 
             follow={this.follow} 
-            unfollow={this.unfollow}></Users>
+            unfollow={this.unfollow}
+            totalUsersCount={this.props.totalUsersCount}
+            pageSize={this.props.pageSize}
+            currentPage={this.props.currentPage}></Users>
         </>
     }
 };
@@ -90,5 +51,4 @@ const mapStateToProps = state => ({
 }
 );
 
-export default connect(mapStateToProps,
-    { follow, unfollow, setUsers, setCurrentPage, setTotalUsersCount, toggleFetching, toggleFollowingProgress })(UsersContainer);
+export default connect(mapStateToProps, { follow, unfollow, getUsers, setCurrentPage })(UsersContainer);

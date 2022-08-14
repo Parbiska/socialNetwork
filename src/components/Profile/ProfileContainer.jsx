@@ -1,30 +1,18 @@
 import React from 'react';
 import Profile from './Profile';
 import { connect } from 'react-redux';
-import { setUserProfile } from './../../redux/profileReducer';
-import { useParams } from 'react-router-dom';
-import { getProfile } from '../../api/api';
-
-const withRouter = Children => {
-    return props => {
-        const match = { params: useParams() };
-        return <Children {...props} match={match} />
-    }
-}
+import { getProfile } from './../../redux/profileReducer';
+import { WithAuthRedirect } from './../../hoc/WithAuthRedirect';
+import { withRouter } from '../../hoc/WithRouter';
+import { compose } from 'redux';
 
 class ProfileContainer extends React.Component {
     userId;
-    componentDidMount = async () => {
+    componentDidMount = () => {
         this.userId = this.props.match.params.userId || this.props.authUserId;
         if (!!this.userId) {
-            try {
-                const data = await getProfile(this.userId);
-                this.props.setUserProfile(data);
-            }
-            catch (e) {
-                console.error(e.message)
-            }
-        }
+            this.props.getProfile(this.userId);
+        } 
     }
 
     render() {
@@ -37,4 +25,4 @@ const mapStateToProps = state => ({
     authUserId: state.auth.id
 });
 
-export default connect(mapStateToProps, { setUserProfile })(withRouter(ProfileContainer));
+export default compose(connect(mapStateToProps, { getProfile }), withRouter, WithAuthRedirect)(ProfileContainer);

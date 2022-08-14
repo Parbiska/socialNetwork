@@ -1,8 +1,8 @@
 import styles from './Settings.module.css';
 
 const Settings = () => (
-    <div>
-        Settings
+    <div className={styles.settings}>
+        <h1>Settings</h1>
     </div>
 );
 

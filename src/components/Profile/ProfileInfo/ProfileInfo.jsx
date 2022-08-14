@@ -1,5 +1,6 @@
 import styles from './ProfileInfo.module.css';
 import Preloader from '../../common/Preloader/Preloader';
+import ProfileStatus from '../ProfileStatus/ProfileStatus';
 
 const ProfileInfo = props => {
     if (!props.profile) {
@@ -57,7 +58,7 @@ const ProfileInfo = props => {
                 <img src={profile.photos.large === null ? 'https://www.directivegroup.com/wp-content/uploads/2017/03/smile-9047-9380-hd-wallpapers-1.jpg' : profile.photos.large} alt="avatar" className={styles.info__avatar} />
                 <div className={styles.info__descr}>
                     <div className={styles.info__name}>{profile.fullName}</div>
-                    About me: {profile.aboutMe} <br />
+                    Status: <ProfileStatus status={profile.aboutMe}></ProfileStatus>
                     Contacts:
                     <ul className={styles.contacts}>
                         {contactsItems}

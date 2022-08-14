@@ -20,8 +20,7 @@ const Header = props => {
 
       <div className={styles.header__login__wrapper}>
         <div className={styles.header__login}>
-          {props.isAuth ? props.login :
-            <NavLink to='/login' className={styles.header__login__btn}>Login</NavLink>}
+          {props.isAuth ? props.login : <NavLink to='/login' className={styles.header__login__btn}>Login</NavLink>}
         </div>
         {img}
       </div>

@@ -22,7 +22,7 @@ return (
     <div className={styles.messages}>
         <div className={styles.messages__wrapper}>
             <div className={styles.messages__dialogs}>
-                <div className={styles.messages__title}>Messages</div>
+                <h1 className={styles.messages__title}>Messages</h1>
                 {dialogsElements}
             </div>
             <div className={styles.messages__dialog}>
