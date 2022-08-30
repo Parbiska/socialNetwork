@@ -1,13 +1,15 @@
-import { getProfileAPI } from "../api/api";
+import { profileAPI } from "../api/api";
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const SET_USER_PROFILE = 'SET-USER-PROFILE';
 const SET_USER_ID = 'SET-USER-ID';
+const SET_STATUS = 'SET-STATUS';
 
 const initialState = {
     profile: null,
     userId: null,
+    status: '',
     posts: [
         { id: 1, message: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto, tempore.', likesCount: 10 },
         { id: 2, message: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto, tempore.', likesCount: 25 },
@@ -48,11 +50,17 @@ const profileReducer = (state = initialState, action) => {
                 ...state, 
                 userId: action.userId
             }
+        case SET_STATUS:
+            return {
+                ...state, 
+                status: action.status
+            }
         default:
             return state;
     }
 };
 
+const setStatus = status => ({ type: SET_STATUS, status });
 const setUserProfile = profile => ({ type: SET_USER_PROFILE,  profile});
 export const addPost = () => ({ type: ADD_POST });
 export const updateNewPostText = newText => ({ type: UPDATE_NEW_POST_TEXT, newText });
@@ -60,8 +68,33 @@ export const updateNewPostText = newText => ({ type: UPDATE_NEW_POST_TEXT, newTe
 
 export const getProfile = userId => async dispatch => {
     try {
-        const data = await getProfileAPI(userId);
-        dispatch(setUserProfile(data));
+        const response = await profileAPI.getProfile(userId);
+        dispatch(setUserProfile(response.data));
+    }
+    catch (e) {
+        console.error(e.message)
+    }
+}
+
+export const getStatus = userId => async dispatch => {
+    try {
+        const response = await profileAPI.getStatus(userId);
+        dispatch(setStatus(response.data));
+    }
+    catch (e) {
+        console.error(e.message)
+    }
+}
+
+export const updateStatus = status => async dispatch => {
+    try {
+        const response = await profileAPI.updateStatus(status);
+        const data = response.data;
+        if (data.resultCode === 0) {
+            dispatch(setStatus(status));
+        } else {
+            console.error('Ошибка получения статуса');
+        }
     }
     catch (e) {
         console.error(e.message)

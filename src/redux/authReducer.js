@@ -1,8 +1,7 @@
-import { authMeAPI, getProfileAPI } from './../api/api';
+import { authAPI, profileAPI } from './../api/api';
 const SET_USER_DATA = 'SET-USER-DATA';
 const TOGGLE_IS_FETCHING = 'TOGGLE-IS-FETCHING';
 const SET_USER_IMG = 'SET-USER-IMG';
-// const TOGGLE_IS_AUTH = 'TOGGLE-IS-AUTH';
 
 const initialState = {
     isAuth: false,
@@ -31,11 +30,6 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 img: action.img
             }
-        // case TOGGLE_IS_AUTH: 
-        //     return {
-        //         ...state,
-        //         isAuth: action.isAuth
-        //     }
         default:
             return state;
     }
@@ -44,19 +38,19 @@ const authReducer = (state = initialState, action) => {
 const setAuthUserData = (id, email, login) => ({ type: SET_USER_DATA, data: { id, email, login } });
 const toggleIsFetching = isFetching => ({ type: TOGGLE_IS_FETCHING, isFetching });
 const setUserImg = imgUrl => ({ type: SET_USER_IMG, imgUrl });
-// const toggleIsAuth = isAuth => ({ type: TOGGLE_IS_AUTH, isAuth });
 
 export const auth = () => async dispatch => {
     dispatch(toggleIsFetching(true));
     try {
-        const data = await authMeAPI();
+        const response = await authAPI.me();
+        const data = response.data;
         if (data.resultCode === 0) {
-            dispatch(toggleIsFetching(false));
             const { id, email, login } = data.data;
             dispatch(setAuthUserData(id, email, login));
+            dispatch(toggleIsFetching(false));
             try {
-                const data = await getProfileAPI(id);
-                dispatch(setUserImg(data.photos.small));
+                const response = await profileAPI.getProfile(id);
+                dispatch(setUserImg(response.data.photos.small));
             }
             catch (e) {
                 console.error('Ошибка получения аватара', e.message)
