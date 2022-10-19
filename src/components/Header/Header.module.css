@@ -58,3 +58,28 @@
     object-fit: cover;
     margin-left: 10px;
 }
+
+.header__link {
+    color: white;
+    text-decoration: none;
+}
+
+.header__link:hover {
+    text-decoration: underline;
+}
+
+.header__img_wr {
+    display: flex;
+    justify-content: center;
+}
+
+.header__logout__btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 15px;
+}
+
+.header__logout__btn:hover {
+    cursor: pointer;
+}

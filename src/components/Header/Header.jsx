@@ -20,9 +20,11 @@ const Header = props => {
 
       <div className={styles.header__login__wrapper}>
         <div className={styles.header__login}>
-          {props.isAuth ? props.login : <NavLink to='/login' className={styles.header__login__btn}>Login</NavLink>}
+          {props.isAuth 
+          ? <button onClick={props.logout} className={styles.header__logout__btn}>Log out</button> 
+          : <NavLink to='/login' className={styles.header__login__btn}>Login</NavLink>}
         </div>
-        {img}
+        <NavLink className={styles.header__img_wr} to="/profile">{img}</NavLink>
       </div>
     </header>
   )

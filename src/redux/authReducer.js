@@ -1,3 +1,4 @@
+import { stopSubmit } from 'redux-form';
 import { authAPI, profileAPI } from './../api/api';
 const SET_USER_DATA = 'SET-USER-DATA';
 const TOGGLE_IS_FETCHING = 'TOGGLE-IS-FETCHING';
@@ -17,8 +18,7 @@ const authReducer = (state = initialState, action) => {
         case SET_USER_DATA:
             return {
                 ...state,
-                ...action.data,
-                isAuth: true
+                ...action.payload
             }
         case TOGGLE_IS_FETCHING:
             return {
@@ -35,7 +35,7 @@ const authReducer = (state = initialState, action) => {
     }
 }
 
-const setAuthUserData = (id, email, login) => ({ type: SET_USER_DATA, data: { id, email, login } });
+const setAuthUserData = (id, email, login, isAuth) => ({ type: SET_USER_DATA, payload: { id, email, login, isAuth } });
 const toggleIsFetching = isFetching => ({ type: TOGGLE_IS_FETCHING, isFetching });
 const setUserImg = imgUrl => ({ type: SET_USER_IMG, imgUrl });
 
@@ -44,9 +44,10 @@ export const auth = () => async dispatch => {
     try {
         const response = await authAPI.me();
         const data = response.data;
+
         if (data.resultCode === 0) {
             const { id, email, login } = data.data;
-            dispatch(setAuthUserData(id, email, login));
+            dispatch(setAuthUserData(id, email, login, true));
             dispatch(toggleIsFetching(false));
             try {
                 const response = await profileAPI.getProfile(id);
@@ -55,10 +56,40 @@ export const auth = () => async dispatch => {
             catch (e) {
                 console.error('Ошибка получения аватара', e.message)
             }
+        } 
+    }
+    catch (e) {
+        console.error('Ошибка в авторизации', e.message);
+    }
+}
+
+export const login = (email, password, rememberMe) => async dispatch => {
+    try {
+        const response = await authAPI.login(email, password, rememberMe);
+        const data = response.data;
+        if (data.resultCode === 0) {
+            dispatch(auth());
+        } else {
+            console.log( data.messages)
+            const message = data.messages.length > 0 ? data.messages[0] : 'Something went wrong';
+            dispatch(stopSubmit('login', {_error: message}));
         }
     }
     catch (e) {
-        console.error('Ошибка в авторизации', e.message)
+        console.error('Ошибка авторизации', e.message);
+    }
+}
+
+export const logout = () => async dispatch => {
+    try {
+        const response = await authAPI.logout();
+        const data = response.data;
+        if (data.resultCode === 0) {
+            dispatch(setAuthUserData(null, null, null, false));
+        }
+    }
+    catch (e) {
+        console.error('Logout errror', e.message);
     }
 }
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { auth } from '../redux/authReducer';
 import Preloader from '../components/common/Preloader/Preloader';
 
 export const WithAuthRedirect = Component => {
@@ -10,8 +9,7 @@ export const WithAuthRedirect = Component => {
             isLoaded: false
         }
 
-        componentDidMount = async () => {
-           await this.props.auth();
+        componentDidMount = () => {
            this.setState({isLoaded: true})
         }
 
@@ -27,5 +25,5 @@ export const WithAuthRedirect = Component => {
         isAuth: state.auth.isAuth
     });
  
-    return connect(mapStateToPropsRedirect, { auth })(RedirectComponent);
+    return connect(mapStateToPropsRedirect, {  })(RedirectComponent);
 };

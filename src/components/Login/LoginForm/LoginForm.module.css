@@ -1,0 +1,31 @@
+.form {
+    margin-top: 10px;
+}
+
+.input {
+    padding: 4px 10px;
+    border: 2px solid black;
+    margin: 5px 0;
+    border-radius: 15px;
+}
+
+.remember {
+    display: flex;
+    align-items: center;
+    line-height: 1;
+    margin: 5px 0 0 0;
+}
+
+.btn {
+    width: 60px;
+    font-size: 15px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 50px;
+}
+
+.summaryError {
+    color: red;
+    font-size: 18px;
+    margin: 4px 0 2px 0;
+}
