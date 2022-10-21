@@ -1,9 +1,9 @@
 import styles from './MyPosts.module.css';
 import Post from './Post/Post';
-import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { maxLengthCreator, required } from '../../../utils/validators/validators';
 import { formField } from '../../common/FormsControls/FormsControls';
+import React from 'react';
 
 const maxLength50 = maxLengthCreator(50);
 
@@ -11,7 +11,7 @@ const PostForm = props => {
 
 	return (
 		<form onSubmit={props.handleSubmit} className={styles.posts__new}>
-			<Field validate={[required, maxLength50 ]} element='textarea' component={formField} name='postText' placeholder="your news..." className={styles.posts__area}></Field>
+			<Field validate={[required, maxLength50]} element='textarea' component={formField} name='postText' placeholder="your news..." className={styles.posts__area}></Field>
 			{/* <button type='reset' className={`${styles.posts__button} ${styles.posts__button_reset}`}>Reset</button> */}
 			<button className={styles.posts__button}>Publish</button>
 		</form>
@@ -20,13 +20,12 @@ const PostForm = props => {
 
 const PostReduxForm = reduxForm({ form: 'newPost' })(PostForm);
 
-const MyPosts = props => {
-
+const MyPosts = React.memo(props => {
 	const onSubmit = formData => {
 		props.addPost(formData.postText);
 	}
 
-    const posts = props.state.posts.map(p => <Post key={p.id} message={p.message} likesCount={p.likesCount}></Post>).reverse();
+	const posts = props.state.posts.map(p => <Post key={p.id} message={p.message} likesCount={p.likesCount}></Post>).reverse();
 
 	return (
 		<div className={styles.posts}>
@@ -35,6 +34,6 @@ const MyPosts = props => {
 			{posts}
 		</div>
 	);
-};
+});
 
 export default MyPosts;

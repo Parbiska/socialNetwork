@@ -68,10 +68,10 @@ const toggleFetching = isFetching => ({ type: TOGGLE_IS_FETCHING, isFetching });
 export const toggleFollowingProgress = (isFetching, userId) => ({ type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userId });
 export const setCurrentPage = pageNumber => ({type: SET_CURRENT_PAGE, pageNumber});
 
-export const getUsers = (currentPage, pageSize) => async dispatch => {
+export const requestUsers = (page, pageSize) => async dispatch => {
     dispatch(toggleFetching(true));
     try {
-        const response = await usersAPI.getUsers(currentPage, pageSize);
+        const response = await usersAPI.getUsers(page, pageSize);
         const data = response.data;
         dispatch(toggleFetching(false));
         dispatch(setUsers(data.items));
