@@ -1,0 +1,20 @@
+.pages {
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    margin: 0 auto;
+
+}
+
+.page {
+    margin: 0 3px 0 3px;
+}
+
+.page:hover {
+    cursor: pointer;
+}
+
+.page_active {
+    font-size: 24px;
+    font-weight: 500;
+}

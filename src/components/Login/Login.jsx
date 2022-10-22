@@ -2,12 +2,12 @@ import styles from './Login.module.css';
 import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { login } from '../../redux/authReducer';
-import LoginForm from './LoginForm/LoginFrom';
+import LoginForm from './LoginForm/LoginForm';
 import { Navigate } from 'react-router-dom';
 
 const LoginReduxForm = reduxForm({ form: 'login' })(LoginForm);
 
-const Login = props => {
+const Login = (props) => {
     const onSubmit = formData => {
         props.login(formData.email, formData.password, formData.rememberMe);
     }

@@ -17,7 +17,7 @@ const AddMessageForm = props => (
 
 const MessageReduxForm = reduxForm({ form: 'newMessage' })(AddMessageForm);
 
-const Messages = (props) => {
+const Messages = props => {
 
     const dialogsElements = props.state.dialogs.map(d => <DialogItem key={d.id} img={d.img} name={d.name} id={d.id}></DialogItem>);
 

@@ -3,8 +3,8 @@ import { Field } from 'redux-form';
 import { formField } from '../../common/FormsControls/FormsControls';
 import { required } from '../../../utils/validators/validators';
 
-const LoginForm = props => (
-    <form onSubmit={props.handleSubmit} className={styles.form}>
+const LoginForm = ({ handleSubmit, error }) => (
+    <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.login}>
             <Field element='input' validate={[required ]} name='email' component={formField} className={styles.input} placeholder='Login' />
         </div>
@@ -14,9 +14,9 @@ const LoginForm = props => (
         <div className={styles.remember}>
             <Field name='rememberMe' component='input' type='checkbox' /> Remember me
         </div>
-        {props.error && 
+        {error && 
             <div className={styles.summaryError}>
-                {props.error}
+                {error}
             </div>
         }
         <div className={styles.button}>

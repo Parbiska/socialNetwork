@@ -8,39 +8,40 @@ import {
 import React from 'react';
 import Users from './Users';
 import { getUsers, getPageSize, getTotalUsersCount, getCurrnetPage, getIsFetching, getIsFollowingInProgress, } from '../../redux/usersSelectors';
+import { useEffect } from 'react';
 
-class UsersContainer extends React.Component {
+const UsersContainer = props => {
 
-    componentDidMount = () => {
-        this.props.requestUsers(this.props.currentPage, this.props.pageSize);
+    const requestUsers = props.requestUsers;
+
+    useEffect( () => {
+       requestUsers(props.currentPage, props.pageSize);
+    }, [ props.currentPage, props.pageSize, requestUsers ]);
+
+    const onPageChanged = pageNumber => {
+        props.setCurrentPage(pageNumber);
+        props.requestUsers(pageNumber, props.pageSize);
     }
 
-    onPageChanged = pageNumber => {
-        this.props.setCurrentPage(pageNumber);
-        this.props.requestUsers(pageNumber, this.props.pageSize);
+    const follow = userId => {
+        props.follow(userId);
     }
 
-    follow = userId => {
-        this.props.follow(userId);
+    const unfollow = async userId => {
+        props.unfollow(userId);
     }
 
-    unfollow = async userId => {
-        this.props.unfollow(userId);
-    }
-
-    render() {
         return <>
-            <Users isButtonPress={this.props.isButtonPress} 
-            onPageChanged={this.onPageChanged} 
-            users={this.props.users} 
-            follow={this.follow} 
-            unfollow={this.unfollow}
-            totalUsersCount={this.props.totalUsersCount}
-            pageSize={this.props.pageSize}
-            currentPage={this.props.currentPage}></Users>
+            <Users isButtonPress={props.isButtonPress} 
+            onPageChanged={onPageChanged} 
+            users={props.users} 
+            follow={follow} 
+            unfollow={unfollow}
+            totalUsersCount={props.totalUsersCount}
+            pageSize={props.pageSize}
+            currentPage={props.currentPage}></Users>
         </>
-    }
-};
+}
 
 const mapStateToProps = s => ({
     users: getUsers(s),

@@ -1,31 +1,25 @@
-import React from 'react';
 import Profile from './Profile';
 import { connect } from 'react-redux';
 import { getProfile, getStatus, updateStatus } from './../../redux/profileReducer';
 import { compose } from 'redux';
 import { withRouter } from '../../hoc/WithRouter';
+import { useEffect, useState } from 'react';
 
+const ProfileContainer = props => {
 
-class ProfileContainer extends React.Component {
+    const [userId, setUserId] = useState(undefined);
 
-    state = {
-        userId: undefined
-    }
+    const { getStatus, getProfile } = { ...props};
 
-    componentDidMount = () => {
-        const userId = this.props.match.params.userId || this.props.authUserId;
-
-
+    useEffect(() => {
+        setUserId(props.match.params.userId || props.authUserId);
         if (!!userId) {
-            this.props.getProfile(userId);
-            this.props.getStatus(userId);
-            this.setState({userId});
+            getProfile(userId);
+            getStatus(userId);
         } 
-    }
+    }, [ userId, props.match.params.userId, props.authUserId, getStatus, getProfile ]);
 
-    render() {
-        return <Profile status={this.props.status} updateStatus={this.props.updateStatus} isAuthUserProfile={this.state.userId === this.props.authUserId} {...this.props}></Profile>
-    }
+    return <Profile status={props.status} updateStatus={props.updateStatus} isAuthUserProfile={userId === props.authUserId} {...props}></Profile>
 };
 
 const mapStateToProps = state => ({

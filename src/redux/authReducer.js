@@ -1,8 +1,8 @@
 import { stopSubmit } from 'redux-form';
 import { authAPI, profileAPI } from './../api/api';
-const SET_USER_DATA = 'SET-USER-DATA';
-const TOGGLE_IS_FETCHING = 'TOGGLE-IS-FETCHING';
-const SET_USER_IMG = 'SET-USER-IMG';
+const SET_USER_DATA = 'auth/SET-USER-DATA';
+const TOGGLE_IS_FETCHING = 'auth/TOGGLE-IS-FETCHING';
+const SET_USER_IMG = 'auth/SET-USER-IMG';
 
 const initialState = {
     isAuth: false,
@@ -70,7 +70,6 @@ export const login = (email, password, rememberMe) => async dispatch => {
         if (data.resultCode === 0) {
             dispatch(auth());
         } else {
-            console.log( data.messages)
             const message = data.messages.length > 0 ? data.messages[0] : 'Something went wrong';
             dispatch(stopSubmit('login', {_error: message}));
         }
