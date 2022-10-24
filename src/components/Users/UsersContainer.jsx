@@ -14,9 +14,9 @@ const UsersContainer = props => {
 
     const requestUsers = props.requestUsers;
 
-    useEffect( () => {
-       requestUsers(props.currentPage, props.pageSize);
-    }, [ props.currentPage, props.pageSize, requestUsers ]);
+    useEffect(() => {
+        requestUsers(props.currentPage, props.pageSize);
+    }, [props.currentPage, props.pageSize, requestUsers]);
 
     const onPageChanged = pageNumber => {
         props.setCurrentPage(pageNumber);
@@ -30,17 +30,17 @@ const UsersContainer = props => {
     const unfollow = async userId => {
         props.unfollow(userId);
     }
-
-        return <>
-            <Users isButtonPress={props.isButtonPress} 
-            onPageChanged={onPageChanged} 
-            users={props.users} 
-            follow={follow} 
+    
+    return <>
+        <Users isButtonPress={props.isButtonPress}
+            onPageChanged={onPageChanged}
+            users={props.users}
+            follow={follow}
             unfollow={unfollow}
             totalUsersCount={props.totalUsersCount}
             pageSize={props.pageSize}
             currentPage={props.currentPage}></Users>
-        </>
+    </>
 }
 
 const mapStateToProps = s => ({

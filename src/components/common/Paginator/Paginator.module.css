@@ -1,9 +1,8 @@
-.pages {
+.paginator {
     display: flex;
     align-items: center;
     font-size: 20px;
     margin: 0 auto;
-
 }
 
 .page {
@@ -17,4 +16,17 @@
 .page_active {
     font-size: 24px;
     font-weight: 500;
+}
+
+.btn {
+    font-size: 18px;
+    background-color: #16A347;
+    border-radius: 5px;
+    border: none;
+    color: #fff;
+}
+
+.btn:hover {
+    border-top: #16A347 solid 1px;
+    border-bottom: #16A347 solid 1px;
 }

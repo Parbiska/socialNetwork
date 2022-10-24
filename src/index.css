@@ -8,18 +8,6 @@ body {
   
 }
 
-::-webkit-scrollbar {
-  width: 10px; /* ширина для вертикального скролла */
-  height: 8px; /* высота для горизонтального скролла */
-  background-color: lightgrey;
-  border-radius: 10em;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: #16A347;
-  border-radius: 10em;
-}
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
