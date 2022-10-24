@@ -15,6 +15,9 @@ import { compose } from 'redux';
 import { withRouter } from './hoc/WithRouter';
 import Preloader from './components/common/Preloader/Preloader';
 import { useEffect } from 'react';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+import store from './redux/store';
 
 const App = props => {
 
@@ -51,7 +54,19 @@ const mapStateToProps = state => ({
 	initialized: state.app.initialized,
 })
 
-export default compose(
+const AppContainer = compose(
 	withRouter,
 	connect(mapStateToProps, { initializeApp, })
 )(App);
+
+const MainApp = props => {
+	return (
+		<BrowserRouter>
+			<Provider store={store}>
+				<AppContainer />
+			</Provider>
+		</BrowserRouter>
+	);
+}
+
+export default MainApp;
