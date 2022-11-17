@@ -1,7 +1,6 @@
 import styles from './User.module.css';
 import { NavLink } from 'react-router-dom';
-
-const smileImg = 'https://www.directivegroup.com/wp-content/uploads/2017/03/smile-9047-9380-hd-wallpapers-1.jpg';
+import userPhoto from '../../../assets/images/avatar.png';
 
 const User = props => {
     const follow = () => {
@@ -17,7 +16,7 @@ const User = props => {
         <div className={styles.user}>
             <div className={styles.ava}>
                 <NavLink to={`/profile/${props.id}`}>
-                    <img className={styles.img} src={!!props.photos.small ? props.photos.small : smileImg} alt='ava' />
+                    <img className={styles.img} src={props.photos.small || userPhoto} alt='ava' />
                 </NavLink>
                 {props.followed ? 
                 <button disabled={props.isButtonPress.some(id => id === props.id)} onClick={unfollow} className={styles.btn}>Unfollow</button> : 

@@ -28,7 +28,7 @@ const authReducer = (state = initialState, action) => {
         case SET_USER_IMG:
             return {
                 ...state,
-                img: action.img
+                img: action.imgUrl
             }
         default:
             return state;

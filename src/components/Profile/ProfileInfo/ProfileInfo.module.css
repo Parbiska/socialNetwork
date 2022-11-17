@@ -22,17 +22,8 @@
 
 .info__name {
     line-height: 1;
-    font-weight: 500;
+    font-weight: 700;
     font-size: 30px;
-}
-
-.info__link {
-    text-decoration: none;
-    color: grey;
-}
-
-.info__link:hover {
-    text-decoration: underline;
 }
 
 .preloader {
@@ -41,12 +32,49 @@
     margin: 10% auto 0 auto;
 }
 
+.img__wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.img__uploader {
+    width: 120px;
+    margin-top: 5px;
+    padding: 1px 0;
+    border-radius: 10px;
+    text-align: center;
+    box-sizing: border-box;
+    color: #fff;
+    background-color: #16A347;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.text_bold {
+    font-weight: 500;
+}
+
 .contacts {
-    margin: 0;
+    margin: 0 0 0 8px;
     padding: 0;
     list-style-type: none;
 }
 
 .contacts__Item {
     color: black;
+}
+
+.btn {
+    font-size: 18px;
+    background-color: #16A347;
+    color: white;
+    border-radius: 8px;
+    border: none;
+    padding: 3px 8px;
+}
+
+.btn:hover {
+    cursor: pointer;
 }

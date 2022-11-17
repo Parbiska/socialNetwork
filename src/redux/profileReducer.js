@@ -1,15 +1,16 @@
+import { stopSubmit } from "redux-form";
 import { profileAPI } from "../api/api";
 
 const ADD_POST = 'profile/ADD-POST';
 const SET_USER_PROFILE = 'profile/SET-USER-PROFILE';
-const SET_USER_ID = 'profile/SET-USER-ID';
 const SET_STATUS = 'profile/SET-STATUS';
-const DELETE_POST = 'profile/DELETE-POST';
+const SAVE_PHOTO_SUCCESS = 'profile/SAVE-PHOTO-SUCCESS';
+const SET_EDIT_MODE = 'profile/SET-EDIT-MODE';
 
 const initialState = {
     profile: null,
-    userId: null,
     status: '',
+    editMode: false,
     posts: [
         { id: 1, message: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto, tempore.', likesCount: 10 },
         { id: 2, message: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto, tempore.', likesCount: 25 },
@@ -18,8 +19,8 @@ const initialState = {
 
 const profileReducer = (state = initialState, action) => {
     switch (action.type) {
-            case ADD_POST: 
-                if (!!action.postText) {
+        case ADD_POST:
+            if (!!action.postText) {
                 return {
                     ...state,
                     posts: [...state.posts, {
@@ -32,25 +33,28 @@ const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
             }
-        case SET_USER_PROFILE: 
+        case SET_USER_PROFILE:
             return {
                 ...state,
                 profile: action.profile
             }
-        case SET_USER_ID:
-            return {
-                ...state, 
-                userId: action.userId
-            }
         case SET_STATUS:
             return {
-                ...state, 
+                ...state,
                 status: action.status
             }
-        case DELETE_POST: 
+        case SAVE_PHOTO_SUCCESS:
             return {
                 ...state,
-                posts: state.posts.filter(p => p.id !== action.postId)
+                profile: {
+                    ...state.profile,
+                    photos: action.photos
+                }
+            }
+        case SET_EDIT_MODE:
+            return {
+                ...state,
+                editMode: action.boolean
             }
         default:
             return state;
@@ -58,9 +62,11 @@ const profileReducer = (state = initialState, action) => {
 };
 
 const setStatus = status => ({ type: SET_STATUS, status });
-const setUserProfile = profile => ({ type: SET_USER_PROFILE,  profile});
+const savePhotoSuccess = photos => ({ type: SAVE_PHOTO_SUCCESS, photos });
+const setUserProfile = profile => ({ type: SET_USER_PROFILE, profile });
+export const setEditMode = boolean => ({ type: SET_EDIT_MODE, boolean});
 export const addPost = postText => ({ type: ADD_POST, postText });
-export const deletePost = postId => ({ type: DELETE_POST, postId });
+export const deletePost = postId => ({ type: SAVE_PHOTO_SUCCESS, postId });
 
 
 export const getProfile = userId => async dispatch => {
@@ -95,6 +101,37 @@ export const updateStatus = status => async dispatch => {
     }
     catch (e) {
         console.error(e.message)
+    }
+}
+
+export const savePhoto = file => async dispatch => {
+    try {
+        const response = await profileAPI.savePhoto(file);
+        const data = response.data;
+        if (data.resultCode === 0) {
+            dispatch(savePhotoSuccess(data.data.photos));
+        } else {
+            console.error('Ошибка получения фото');
+        }
+    }
+    catch (e) {
+        console.error('Ошибка загрузки фото', e.message)
+    }
+}
+
+export const saveProfile = profile => async (dispatch, getState) => {
+    try {
+        const response = await profileAPI.saveProfile(profile);
+        const userId = getState().auth.id
+        if (response.data.resultCode === 0) {
+            dispatch(getProfile(userId));
+            dispatch(setEditMode(false));
+        } else {
+            dispatch(stopSubmit('edit-profile', { _error: response.data.messages[0] }));
+        }
+    }
+    catch (e) {
+        console.error('Ошибка отправки данных профиля', e.message)
     }
 }
 

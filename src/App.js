@@ -1,7 +1,7 @@
 import './App.css';
 import React, { Suspense } from 'react';
 import Navbar from './components/Navbar/Navbar';
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, HashRouter } from "react-router-dom";
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
@@ -14,7 +14,6 @@ import { withRouter } from './hoc/WithRouter';
 import Preloader from './components/common/Preloader/Preloader';
 import { useEffect } from 'react';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
 import store from './redux/store';
 
 const MessagesContainer = React.lazy(() => import('./components/Messages/MessagesContainer'));
@@ -65,11 +64,12 @@ const AppContainer = compose(
 
 const MainApp = props => {
 	return (
-		<BrowserRouter>
+		// BrowserRouter basename={process.env.PUBLIC_URL}
+		<HashRouter>
 			<Provider store={store}>
 				<AppContainer />
 			</Provider>
-		</BrowserRouter>
+		</HashRouter>
 	);
 }
 

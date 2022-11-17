@@ -1,16 +1,11 @@
 import styles from './Header.module.css';
 import logo from '../../assets/images/logo.png';
 import { NavLink } from 'react-router-dom';
+import userPhoto from '../../assets/images/avatar.png';
 
-const Header = props => {
-  let img = null;
-  if(props.isAuth) {
-    if (!!props.img) {
-      img = <img className={styles.header__img} src={props.img} alt="userImg" />
-    } else {
-      img = <img className={styles.header__img} src='https://www.directivegroup.com/wp-content/uploads/2017/03/smile-9047-9380-hd-wallpapers-1.jpg' alt="userImg" /> 
-    }
-  }
+const Header = ({avatar, isAuth, logout}) => {
+  const img =  avatar || userPhoto;
+
   return (
     <header className={styles.header}>
       <div className={styles.header__network}>
@@ -20,11 +15,11 @@ const Header = props => {
 
       <div className={styles.header__login__wrapper}>
         <div className={styles.header__login}>
-          {props.isAuth 
-          ? <button onClick={props.logout} className={styles.header__logout__btn}>Log out</button> 
+          {isAuth 
+          ? <button onClick={logout} className={styles.header__logout__btn}>Log out</button> 
           : <NavLink to='/login' className={styles.header__login__btn}>Login</NavLink>}
         </div>
-        <NavLink className={styles.header__img_wr} to="/profile">{img}</NavLink>
+        <NavLink className={styles.header__img_wr} to="/profile"><img className={styles.header__img} src={img} alt="userImg"/></NavLink>
       </div>
     </header>
   )

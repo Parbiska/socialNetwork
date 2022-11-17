@@ -1,12 +1,13 @@
 import styles from './Post.module.css';
+import userPhoto from '../../../../assets/images/avatar.png';
 
-const Post = (props) => (
+const Post = ({ photo, likesCount, message, name }) => (
     <div className={styles.post}>
-        <img className={styles.img} src="https://store.playstation.com/store/api/chihiro/00_09_000/container/RU/ru/99/EP2402-CUSA05624_00-AV00000000000193/0/image?_version=00_09_000&platform=chihiro&bg_color=000000&opacity=100&w=720&h=720" alt="user" />
+        <img className={styles.img} src={photo || userPhoto} alt="user" />
         <div className={styles.text}>
-            <div className={styles.name}>Demid</div>
-            {props.message}
-            <div>Likes: {props.likesCount}</div>
+            <div className={styles.name}>{name}</div>
+            {message}
+            <div>Likes: {likesCount}</div>
         </div>
     </div>
 );

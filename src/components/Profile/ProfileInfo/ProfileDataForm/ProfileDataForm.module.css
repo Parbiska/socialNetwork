@@ -1,0 +1,50 @@
+.text_bold {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.textarea {
+    margin-top: 5px;
+    padding: 3px 5px;
+    resize: none;
+    width: 300px;
+    height: 40px;
+    border-radius: 5px;
+}
+
+.input {
+    padding: 2px 4px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.contacts {
+    margin-left: 4px;
+    font-size: 18px;
+    font-weight: 500;
+    width: 280px;
+}
+
+.contact {
+    margin-top: 2px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn {
+    font-size: 18px;
+    background-color: #16A347;
+    color: white;
+    border-radius: 8px;
+    border: none;
+    padding: 3px 8px;
+}
+
+.btn:hover {
+    cursor: pointer;
+}
+
+.summaryError {
+    color: red;
+    font-size: 20px;
+}

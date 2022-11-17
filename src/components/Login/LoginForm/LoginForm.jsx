@@ -1,18 +1,17 @@
 import styles from './LoginForm.module.css';
-import { Field } from 'redux-form';
-import { formField } from '../../common/FormsControls/FormsControls';
+import { createField, Input } from '../../common/FormsControls/FormsControls';
 import { required } from '../../../utils/validators/validators';
 
 const LoginForm = ({ handleSubmit, error }) => (
     <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.login}>
-            <Field element='input' validate={[required ]} name='email' component={formField} className={styles.input} placeholder='Login' />
+            {createField('Login', 'email', [required], Input, { className: styles.input })}
         </div>
         <div className={styles.password}>
-            <Field element='input' validate={[required ]} type='password' name='password' component={formField} className={styles.input} placeholder='Password' />
+            {createField('Password', 'password', [required], Input, { className: styles.input,  type: 'password'})}
         </div>
         <div className={styles.remember}>
-            <Field name='rememberMe' component='input' type='checkbox' /> Remember me
+            {createField('', 'rememberMe', [], Input, { className: styles.input,  type: 'checkbox'})} Remember me
         </div>
         {error && 
             <div className={styles.summaryError}>
