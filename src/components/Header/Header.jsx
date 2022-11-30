@@ -3,7 +3,7 @@ import logo from '../../assets/images/logo.png';
 import { NavLink } from 'react-router-dom';
 import userPhoto from '../../assets/images/avatar.png';
 
-const Header = ({avatar, isAuth, logout}) => {
+const Header = ({ avatar, isAuth, logout }) => {
   const img =  avatar || userPhoto;
 
   return (

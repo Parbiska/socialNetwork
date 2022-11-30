@@ -4,22 +4,24 @@ import { getProfile, getStatus, updateStatus, savePhoto, saveProfile, setEditMod
 import { compose } from 'redux';
 import { withRouter } from '../../hoc/WithRouter';
 import { useEffect, useState } from 'react';
+import { Navigate } from 'react-router-dom';
 
-const ProfileContainer = props => {
+const ProfileContainer = ({ getStatus, getProfile, match, authUserId, isAuth, saveProfile, savePhoto, status, updateStatus, ...props }) => {
 
     const [userId, setUserId] = useState(undefined);
 
-    const { getStatus, getProfile } = { ...props};
 
     useEffect(() => {
-        setUserId(props.match.params.userId || props.authUserId);
+        setUserId(match.params.userId || authUserId);
         if (!!userId) {
             getProfile(userId);
             getStatus(userId);
         } 
-    }, [ userId, props.match.params.userId, props.authUserId, getStatus, getProfile ]);
+    }, [ userId, match.params.userId, authUserId, getStatus, getProfile ]);
 
-    return <Profile saveProfile={props.saveProfile} savePhoto={props.savePhoto} status={props.status} updateStatus={props.updateStatus} isAuthUserProfile={userId === props.authUserId} {...props}></Profile>
+    if (!isAuth && !match.params.userId) return <Navigate to='/login'></Navigate>
+
+    return <Profile saveProfile={saveProfile} savePhoto={savePhoto} status={status} updateStatus={updateStatus} isAuthUserProfile={userId === authUserId} {...props}></Profile>
 };
 
 const mapStateToProps = state => ({

@@ -32,29 +32,21 @@ const usersReducer = (state = initialState, action) => {
         case SET_USERS:
             return {
                 ...state,
-                users: [ ...action.users ]
+                users: [...action.users]
+            }
+        case TOGGLE_IS_FOLLOWING_PROGRESS:
+            return {
+                ...state,
+                isFollowingInProgress: action.isFetching
+                    ? [...state.isFollowingInProgress, action.userId]
+                    : [state.isFollowingInProgress.filter(id => id !== action.userId)]
             }
         case SET_CURRENT_PAGE:
+        case SET_TOTAL_USERS_COUNT:
+        case TOGGLE_IS_FETCHING:
             return {
                 ...state,
-                currentPage: action.pageNumber
-            }
-        case SET_TOTAL_USERS_COUNT: 
-            return {
-                ...state, 
-                totalUsersCount: action.count
-            }
-        case TOGGLE_IS_FETCHING: 
-            return {
-                ...state,
-                isFetching: action.isFetching
-            }
-        case TOGGLE_IS_FOLLOWING_PROGRESS: 
-            return {
-                ...state,
-                isFollowingInProgress: action.isFetching 
-                ? [...state.isFollowingInProgress, action.userId] 
-                : [state.isFollowingInProgress.filter(id => id !== action.userId)]
+                ...action.payload
             }
         default:
             return state;
@@ -64,10 +56,10 @@ const usersReducer = (state = initialState, action) => {
 const followSuccess = userId => ({ type: FOLLOW, userId });
 const unfollowSuccess = userId => ({ type: UNFOLLOW, userId });
 const setUsers = users => ({ type: SET_USERS, users });
-const setTotalUsersCount = count => ({ type: SET_TOTAL_USERS_COUNT, count });
-const toggleFetching = isFetching => ({ type: TOGGLE_IS_FETCHING, isFetching });
+const setTotalUsersCount = totalUsersCount => ({ type: SET_TOTAL_USERS_COUNT, payload: { totalUsersCount } });
+const toggleFetching = isFetching => ({ type: TOGGLE_IS_FETCHING, payload: { isFetching } });
 export const toggleFollowingProgress = (isFetching, userId) => ({ type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userId });
-export const setCurrentPage = pageNumber => ({type: SET_CURRENT_PAGE, pageNumber});
+export const setCurrentPage = currentPage => ({ type: SET_CURRENT_PAGE, payload: { currentPage } });
 
 export const requestUsers = (page, pageSize) => async dispatch => {
     dispatch(toggleFetching(true));
@@ -78,23 +70,23 @@ export const requestUsers = (page, pageSize) => async dispatch => {
         dispatch(setUsers(data.items));
         dispatch(setTotalUsersCount(data.totalCount));
     }
-    catch(e) {
+    catch (e) {
         console.error('Ошибка в получении пользователей', e.message)
     }
 };
 
 const followunfollowFlow = async (dispatch, userId, apiMethod, actionCreator) => {
     dispatch(toggleFollowingProgress(true, userId));
-        try {
-            const response = await apiMethod(userId);
-            const data = response.data;
-            if (data.resultCode === 0) {
-                dispatch(actionCreator(userId));
-            }
+    try {
+        const response = await apiMethod(userId);
+        const data = response.data;
+        if (data.resultCode === 0) {
+            dispatch(actionCreator(userId));
         }
-        catch(e) {
-            console.error('Ошибка подписки', e.message);
-        }
+    }
+    catch (e) {
+        console.error('Ошибка подписки', e.message);
+    }
     dispatch(toggleFollowingProgress(false, userId));
 }
 

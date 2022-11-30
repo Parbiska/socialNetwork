@@ -5,7 +5,7 @@ import { auth, logout  } from './../../redux/authReducer';
 const mapStateToProps = state => ({
     isAuth: state.auth.isAuth,
     userName: state.auth.login,
-    avatar: state.auth.img,
+    avatar: state.auth.imgUrl,
     id: state.auth.id
 });
 

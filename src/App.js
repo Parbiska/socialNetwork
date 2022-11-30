@@ -1,7 +1,7 @@
-import './App.css';
+import s from './App.module.css';
 import React, { Suspense } from 'react';
 import Navbar from './components/Navbar/Navbar';
-import { Routes, Route, HashRouter } from "react-router-dom";
+import { Routes, Route, HashRouter, Navigate } from "react-router-dom";
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
@@ -20,24 +20,26 @@ const MessagesContainer = React.lazy(() => import('./components/Messages/Message
 const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
 
-const App = props => {
+const App = ({ initializeApp, initialized }) => {
 
 	useEffect(() => {
-		const fetchData = async () => await props.initializeApp();
+		const fetchData = async () => await initializeApp();
+
 		fetchData();
 	});
 
-	if (!props.initialized) {
+	if (!initialized) {
 		return <Preloader></Preloader>;
 	}
 
 	return (
-		<div className='app'>
+		<div className={s.app}>
 			<HeaderContainer></HeaderContainer>
 			<Navbar></Navbar>
-			<main className='app__main'>
+			<main className={s.app__main}>
 				<Suspense fallback={<div><Preloader></Preloader></div>}>
 					<Routes>
+						<Route path="/" element={<Navigate to="/users" />} />
 						<Route path='/profile' element={<ProfileContainer></ProfileContainer>} />
 						<Route path='/profile/:userId' element={<ProfileContainer></ProfileContainer>} />
 						<Route path='/messages/*' element={<MessagesContainer></MessagesContainer>}></Route>
@@ -46,6 +48,7 @@ const App = props => {
 						<Route path='/settings' element={<Settings></Settings>}></Route>
 						<Route path='/users' element={<UsersContainer></UsersContainer>}></Route>
 						<Route path='/login' element={<Login></Login>}></Route>
+						<Route path='*' element={<div className={s.error}>Error 404: Page not found</div>}></Route>
 					</Routes>
 				</Suspense>
 			</main>
@@ -62,7 +65,7 @@ const AppContainer = compose(
 	connect(mapStateToProps, { initializeApp, })
 )(App);
 
-const MainApp = props => {
+const MainApp = () => {
 	return (
 		// BrowserRouter basename={process.env.PUBLIC_URL}
 		<HashRouter>

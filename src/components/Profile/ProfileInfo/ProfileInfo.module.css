@@ -78,3 +78,10 @@ input[type="file"] {
 .btn:hover {
     cursor: pointer;
 }
+
+.info__status {
+    max-width: 814px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

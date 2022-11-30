@@ -1,34 +1,30 @@
 import { stopSubmit } from 'redux-form';
-import { authAPI, profileAPI } from './../api/api';
+import { authAPI, profileAPI, securityAPI } from './../api/api';
+
 const SET_USER_DATA = 'auth/SET-USER-DATA';
 const TOGGLE_IS_FETCHING = 'auth/TOGGLE-IS-FETCHING';
 const SET_USER_IMG = 'auth/SET-USER-IMG';
+const GET_CAPTCHA_URL_SUCCESS = 'auth/GET-CAPTCHA-URL-SUCCESS';
 
 const initialState = {
     isAuth: false,
     id: null,
     email: null,
     login: null,
-    img: null,
+    imgUrl: null,
     isFetching: false,
+    captchaUrl: null
 };
 
 const authReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_USER_DATA:
+        case TOGGLE_IS_FETCHING:
+        case SET_USER_IMG:
+        case GET_CAPTCHA_URL_SUCCESS:
             return {
                 ...state,
                 ...action.payload
-            }
-        case TOGGLE_IS_FETCHING:
-            return {
-                ...state,
-                isFetching: action.isFetching
-            }
-        case SET_USER_IMG:
-            return {
-                ...state,
-                img: action.imgUrl
             }
         default:
             return state;
@@ -36,8 +32,9 @@ const authReducer = (state = initialState, action) => {
 }
 
 const setAuthUserData = (id, email, login, isAuth) => ({ type: SET_USER_DATA, payload: { id, email, login, isAuth } });
-const toggleIsFetching = isFetching => ({ type: TOGGLE_IS_FETCHING, isFetching });
-const setUserImg = imgUrl => ({ type: SET_USER_IMG, imgUrl });
+const toggleIsFetching = isFetching => ({ type: TOGGLE_IS_FETCHING, payload: { isFetching } });
+const setUserImg = imgUrl => ({ type: SET_USER_IMG, payload: { imgUrl } });
+const getCaptchaUrlSuccess = captchaUrl => ({ type: GET_CAPTCHA_URL_SUCCESS, payload: { captchaUrl } });
 
 export const auth = () => async dispatch => {
     dispatch(toggleIsFetching(true));
@@ -56,22 +53,37 @@ export const auth = () => async dispatch => {
             catch (e) {
                 console.error('Ошибка получения аватара', e.message)
             }
-        } 
+        }
     }
     catch (e) {
         console.error('Ошибка в авторизации', e.message);
     }
 }
 
-export const login = (email, password, rememberMe) => async dispatch => {
+export const getCaptchaUrl = () => async dispatch => {
     try {
-        const response = await authAPI.login(email, password, rememberMe);
+        const response = await securityAPI.getCaptcha();
+        console.log(response);
+        const captchaUrl = response.data.url;
+        dispatch(getCaptchaUrlSuccess(captchaUrl));
+    }
+    catch (e) {
+        console.error('Ошибка получения каптчи', e.message);
+    }
+}
+
+export const login = (email, password, rememberMe, captcha) => async dispatch => {
+    try {
+        const response = await authAPI.login(email, password, rememberMe, captcha);
         const data = response.data;
         if (data.resultCode === 0) {
             dispatch(auth());
         } else {
+            if (data.resultCode === 10) {
+                dispatch(getCaptchaUrl());
+            } 
             const message = data.messages.length > 0 ? data.messages[0] : 'Something went wrong';
-            dispatch(stopSubmit('login', {_error: message}));
+            dispatch(stopSubmit('login', { _error: message }));
         }
     }
     catch (e) {
@@ -85,6 +97,7 @@ export const logout = () => async dispatch => {
         const data = response.data;
         if (data.resultCode === 0) {
             dispatch(setAuthUserData(null, null, null, false));
+            dispatch(setUserImg(null));
         }
     }
     catch (e) {

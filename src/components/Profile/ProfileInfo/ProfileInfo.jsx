@@ -19,7 +19,7 @@ const ProfileData = props => {
         <div className={styles.info__descr}>
             <div className={styles.info__name}>{props.profile.fullName}</div>
             
-            <div>
+            <div className={styles.info__status}>
                 <span className={styles.text_bold}>Status:</span> <ProfileStatus isAuthUserProfile={props.isAuthUserProfile} updateStatus={props.updateStatus} status={props.status}></ProfileStatus>
             </div>
 

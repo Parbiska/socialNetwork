@@ -33,16 +33,6 @@ const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
             }
-        case SET_USER_PROFILE:
-            return {
-                ...state,
-                profile: action.profile
-            }
-        case SET_STATUS:
-            return {
-                ...state,
-                status: action.status
-            }
         case SAVE_PHOTO_SUCCESS:
             return {
                 ...state,
@@ -51,20 +41,22 @@ const profileReducer = (state = initialState, action) => {
                     photos: action.photos
                 }
             }
+        case SET_USER_PROFILE:
+        case SET_STATUS:
         case SET_EDIT_MODE:
             return {
                 ...state,
-                editMode: action.boolean
+                ...action.payload
             }
         default:
             return state;
     }
 };
 
-const setStatus = status => ({ type: SET_STATUS, status });
+const setStatus = status => ({ type: SET_STATUS, payload: { status } });
 const savePhotoSuccess = photos => ({ type: SAVE_PHOTO_SUCCESS, photos });
-const setUserProfile = profile => ({ type: SET_USER_PROFILE, profile });
-export const setEditMode = boolean => ({ type: SET_EDIT_MODE, boolean});
+const setUserProfile = profile => ({ type: SET_USER_PROFILE, payload: { profile } });
+export const setEditMode = editMode => ({ type: SET_EDIT_MODE, payload: { editMode } });
 export const addPost = postText => ({ type: ADD_POST, postText });
 export const deletePost = postId => ({ type: SAVE_PHOTO_SUCCESS, postId });
 

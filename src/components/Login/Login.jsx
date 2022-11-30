@@ -7,25 +7,26 @@ import { Navigate } from 'react-router-dom';
 
 const LoginReduxForm = reduxForm({ form: 'login' })(LoginForm);
 
-const Login = (props) => {
+const Login = ({ isAuth, captchaUrl, login }) => {
     const onSubmit = formData => {
-        props.login(formData.email, formData.password, formData.rememberMe);
+        login(formData.email, formData.password, formData.rememberMe, formData.captcha);
     }
 
-    if (props.isAuth) {
+    if (isAuth) {
         return <Navigate to="/profile"></Navigate>
     }
 
     return (
         <div className={styles.login}>
             <h1 className={styles.title}>Login</h1>
-            <LoginReduxForm onSubmit={onSubmit}></LoginReduxForm>
+            <LoginReduxForm captchaUrl={captchaUrl} onSubmit={onSubmit}></LoginReduxForm>
         </div>
     )
 };
 
 const mapStateToProps = state => ({
-    isAuth: state.auth.isAuth
+    isAuth: state.auth.isAuth,
+    captchaUrl: state.auth.captchaUrl
 })
 
 export default connect(mapStateToProps, { login })(Login);
