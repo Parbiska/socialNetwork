@@ -82,6 +82,5 @@ input[type="file"] {
 .info__status {
     max-width: 814px;
     overflow: hidden;
-    white-space: nowrap;
     text-overflow: ellipsis;
 }

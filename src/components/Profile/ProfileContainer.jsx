@@ -26,7 +26,7 @@ const ProfileContainer = ({ getStatus, getProfile, match, authUserId, isAuth, sa
 
 const mapStateToProps = state => ({
     profile: state.profilePage.profile,
-    editMode: state.profilePage.editMode,
+    isEditMode: state.profilePage.isEditMode,
     status: state.profilePage.status,
     authUserId: state.auth.id,
     isAuth: state.auth.isAuth

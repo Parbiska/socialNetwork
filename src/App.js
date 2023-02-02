@@ -10,8 +10,8 @@ import Login from './components/Login/Login';
 import { initializeApp } from './redux/appReducer';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { withRouter } from './hoc/WithRouter';
 import Preloader from './components/common/Preloader/Preloader';
+import { withRouter } from './hoc/WithRouter';
 import { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import store from './redux/store';
@@ -56,7 +56,7 @@ const App = ({ initializeApp, initialized }) => {
 	);
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
 	initialized: state.app.initialized,
 })
 
